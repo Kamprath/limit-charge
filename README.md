@@ -1,6 +1,6 @@
 # limit-charge
 
-A lightweight Linux utility to **set and persist your laptop’s maximum battery charge limit**.  
+A lightweight Debian utility to **set and persist your laptop’s maximum battery charge limit**.  
 It automatically detects your battery device and sysfs threshold file, so you don’t have to configure anything manually.
 
 ---
@@ -172,12 +172,4 @@ PRs that add new detection patterns, improve packaging, or enhance UX are apprec
 
 ## 🪪 License
 
-MIT License © 2025 [Your Name]
-
----
-
-## ❤️ Credits
-
-Inspired by ThinkPad battery tools and the Linux kernel’s `power_supply` sysfs interface.
-
-```
+MIT License © 2025 Johnny Kamprath
