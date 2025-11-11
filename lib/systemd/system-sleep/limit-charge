@@ -1,0 +1,6 @@
+#!/bin/bash
+case "$1" in
+  post)
+    /usr/bin/apply-limit-charge
+    ;;
+esac

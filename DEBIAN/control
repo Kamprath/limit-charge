@@ -1,0 +1,9 @@
+Package: limit-charge
+Version: 1.0-1
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Johnny K <johnny@johnnyk.dev>
+Description: Set and persist laptop battery charge limit
+ A tiny utility + systemd service to store a charge limit and reapply it at boot/resume.
+Depends: systemd

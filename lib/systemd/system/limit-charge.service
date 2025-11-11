@@ -1,0 +1,11 @@
+[Unit]
+Description=Apply battery charge limit at boot
+ConditionPathExists=/var/lib/limit-charge/value
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/apply-limit-charge
+
+[Install]
+WantedBy=multi-user.target

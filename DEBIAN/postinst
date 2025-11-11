@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+mkdir -p /var/lib/limit-charge
+chmod 755 /var/lib/limit-charge
+
+CONFIG_FILE="/etc/limit-charge.conf"
+DETECT="/usr/lib/limit-charge/detect-sys-file"
+
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    if SYS_FILE=$("$DETECT" 2>/dev/null); then
+        cat > "$CONFIG_FILE" <<EOF
+# limit-charge configuration
+# You can override the detected sysfs path here.
+SYS_FILE="$SYS_FILE"
+EOF
+        chmod 644 "$CONFIG_FILE"
+    fi
+fi
+
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl daemon-reload
+    systemctl enable limit-charge.service || true
+    systemctl start limit-charge.service || true
+fi
+
+exit 0
