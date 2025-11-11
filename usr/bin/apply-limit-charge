@@ -1,0 +1,23 @@
+#!/bin/bash
+VALUE_FILE="/var/lib/limit-charge/value"
+SYS_FILE="/sys/class/power_supply/BAT1/charge_control_end_threshold"
+
+if [[ ! -f "$VALUE_FILE" ]]; then
+  echo "No saved charge limit in $VALUE_FILE"
+  exit 0
+fi
+
+VAL=$(cat "$VALUE_FILE")
+
+if ! [[ "$VAL" =~ ^[0-9]+$ ]]; then
+  echo "Invalid value: $VAL"
+  exit 1
+fi
+
+if (( VAL < 1 || VAL > 100 )); then
+  echo "Value out of range: $VAL"
+  exit 1
+fi
+
+echo "$VAL" | tee "$SYS_FILE" > /dev/null
+echo "Applied charge limit: $VAL%"

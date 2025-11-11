@@ -1,0 +1,22 @@
+#!/bin/bash
+# Try to find the correct battery charge threshold file.
+
+POWER_SUPPLY_DIR="/sys/class/power_supply"
+
+for bat in "$POWER_SUPPLY_DIR"/BAT*; do
+    [ -d "$bat" ] || continue
+
+    if [[ -f "$bat/type" ]] && grep -qi battery "$bat/type"; then
+        for fname in \
+            charge_control_end_threshold \
+            charge_stop_threshold \
+            charge_control_end_threshold0; do
+            if [[ -f "$bat/$fname" ]]; then
+                echo "$bat/$fname"
+                exit 0
+            fi
+        done
+    fi
+done
+
+exit 1
