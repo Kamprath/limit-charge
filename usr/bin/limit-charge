@@ -44,9 +44,15 @@ if (( VAL < 1 || VAL > 100 )); then
 fi
 
 # write to sysfs (needs sudo/root)
-echo "$VAL" | sudo tee "$SYS_FILE" > /dev/null
+if ! echo "$VAL" | tee "$SYS_FILE" > /dev/null; then
+  echo "Failed to write to $SYS_FILE. Ensure you have the necessary permissions."
+  exit 1
+fi
 
 # store for service
-echo "$VAL" | sudo tee "$VALUE_FILE" > /dev/null
+if ! echo "$VAL" | tee "$VALUE_FILE" > /dev/null; then
+  echo "Error: Failed to update $VALUE_FILE. Ensure you have the necessary permissions."
+  exit 1
+fi
 
 echo "Charge limit set to $VAL% (to $SYS_FILE)"
